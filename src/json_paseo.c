@@ -25,6 +25,8 @@ int parsear_datos(char *string, struct pelicula *salida){
         return 1;
     }
 
+    // acceder a los datos
+
     cJSON *results = cJSON_GetObjectItemCaseSensitive(json, "results");
     
     if(cJSON_GetArraySize(results) == 0) {
