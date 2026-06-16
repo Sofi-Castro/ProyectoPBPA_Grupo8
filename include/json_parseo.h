@@ -1,5 +1,5 @@
-#ifndef JSON_PASEO_H
-#define JSON_PASEO_H
+#ifndef JSON_PARSEO_H
+#define JSON_PARSEO_H
 
 struct pelicula {
     char *titulo;
