@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <cjson/cJSON.h>
+#include <stdlib.h>
 
-#define MAX_PELIS 3
 
-// creo que hay que incluir esto al archivo .h
 struct pelicula {
     char *titulo;
     char *descripcion;
@@ -11,7 +10,8 @@ struct pelicula {
     char *poster_path;
 };
 
-int parsear_datos(char *string, struct pelicula *salida){
+int parsear_datos(char *string, struct pelicula *salida, int cantidad){
+
 
     // parsea los datos
 
@@ -41,7 +41,7 @@ int parsear_datos(char *string, struct pelicula *salida){
     // recorre cada pelicula guerda datos en salida
     
     cJSON_ArrayForEach(dato, results){
-        if (i == MAX_PELIS) break;
+        if (i == cantidad) break;
 
         (salida+i)->titulo = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "title") );
         (salida+i)->descripcion = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "overview") );
@@ -52,8 +52,20 @@ int parsear_datos(char *string, struct pelicula *salida){
     }
 
 
+
     // limpiar
 
     cJSON_Delete(json);
     return 0;
+}
+
+
+// libera la memoria
+void free_memory(struct pelicula *salida, int cantidad){
+        for (int i = 0; i < cantidad; i++) {
+        free((salida+i)->titulo);
+        free((salida+i)->descripcion);
+        free((salida+i)->calificacion);
+        free((salida+i)->poster_path);
+    }
 }
