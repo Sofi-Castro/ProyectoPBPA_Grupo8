@@ -10,4 +10,6 @@ struct pelicula {
 
 int parsear_datos(char *string, struct pelicula *salida);
 
+void free_memory(struct pelicula *salida, int cantidad);
+
 #endif
