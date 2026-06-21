@@ -1,31 +1,23 @@
 #include <gtk/gtk.h>
 
 static void
-print_header (GtkWidget *widget, gpointer data){
-    g_print("¿Qué tipo de película quieres ver? Elige una opción de las tres categorías:");
-}
-
-static void
 activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *box;
-    GtkWidget *button;
+    GtkWidget *label;
 
     window = gtk_application_window_new (app);
     gtk_window_set_title (GTK_WINDOW (window), "Recomendador de películas");
     gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
+
+    label = gtk_label_new("¿Qué tipo de películas quieres ver? Elige una opción de las tres categorías");
+    gtk_window_set_child(GTK_WINDOW(window), label);
 
     box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_halign (box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign (box, GTK_ALIGN_CENTER);
 
     gtk_window_set_child (GTK_WINDOW (window), box);
-
-    button = gtk_button_new_with_label ("Header");
-    g_signal_connect (button, "clicked", G_CALLBACK (print_header), NULL);
-    g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_window_destroy), window);
-
-    gtk_box_append (GTK_BOX (box), button); 
 
     gtk_window_present (GTK_WINDOW (window));
 }
