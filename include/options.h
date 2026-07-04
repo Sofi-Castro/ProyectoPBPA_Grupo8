@@ -1,11 +1,6 @@
 #include <gtk/gtk.h>
+#include <api.h>
 
-typedef struct {
-    int genero_id;
-    int anio_desde;
-    int anio_hasta;
-    int plataforma_id;
-    } FiltrosBusqueda;
 
 void option_genre(GtkButton *button, gpointer data, FiltrosBusqueda *filtros);
 
