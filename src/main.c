@@ -6,6 +6,7 @@ activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *grid1, *grid2, *grid3;
     GtkWidget *titulo, *genero, *años, *plataforma;
+    GtkWidget *boton;
     GtkWidget *box;
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
@@ -20,10 +21,16 @@ activate (GtkApplication *app, gpointer user_data){
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
 
     /*Mensajes*/
-    titulo = gtk_label_new("¿Qué tipo de película quiere ver? Elige una opción de las tres categorías:");
-    genero = gtk_label_new("Elige un género: ");
-    años = gtk_label_new("Elige el intervalo de años: ");
-    plataforma = gtk_label_new("Elige una plataforma: ");
+    titulo = gtk_label_new("¿Qué tipo de película quiere ver? Selccione una opción de cada una de las tres categorías:");
+    genero = gtk_label_new("Seleccione un género: ");
+    gtk_label_set_xalign(GTK_LABEL(genero), 0.0);
+    años = gtk_label_new("Seleccione el intervalo de años: ");
+    gtk_label_set_xalign(GTK_LABEL(años), 0.0);
+    plataforma = gtk_label_new("Seleccione una plataforma: ");
+    gtk_label_set_xalign(GTK_LABEL(plataforma), 0.0);
+
+    /*Botón para buscar*/
+    boton = gtk_button_new_with_label("Buscar");
 
     /*Botones para elegir género*/
     radio11 = gtk_radio_button_new_with_label(NULL, "Acción");
@@ -85,7 +92,7 @@ activate (GtkApplication *app, gpointer user_data){
     gtk_grid_attach(GTK_GRID(grid3), radio53, 6,0,2,2);
     gtk_grid_attach(GTK_GRID(grid3), radio63, 6,3,2,2);
 
-    /*acomodar la box con cada widget*/
+    /*Acomodar la box con cada widget*/
     gtk_box_pack_start(GTK_BOX(box), titulo, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), genero, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), grid1, FALSE, FALSE, 0);
@@ -93,6 +100,7 @@ activate (GtkApplication *app, gpointer user_data){
     gtk_box_pack_start(GTK_BOX(box), grid2, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), plataforma, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), grid3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), boton, FALSE, FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), box);
 
     gtk_widget_show_all(window);
