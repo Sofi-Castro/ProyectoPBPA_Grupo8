@@ -4,7 +4,9 @@
 static void
 activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
-    GtkWidget *grid;
+    GtkWidget *grid1, *grid2, *grid3;
+    GtkWidget *titulo, *genero, *años, *plataforma;
+    GtkWidget *box;
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
     GtkWidget *radio13, *radio23, *radio33, *radio43, *radio53, *radio63;
@@ -14,8 +16,14 @@ activate (GtkApplication *app, gpointer user_data){
     gtk_window_set_title (GTK_WINDOW (window), "Recomendador de películas");
     gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
 
-    /*Configuración de la cuadrícula donde van los botones*/
-    grid = gtk_grid_new ();
+    /*Configuración de la caja donde van los elementos*/
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
+
+    /*Mensajes*/
+    titulo = gtk_label_new("¿Qué tipo de película quiere ver? Elige una opción de las tres categorías:");
+    genero = gtk_label_new("Elige un género: ");
+    años = gtk_label_new("Elige el intervalo de años: ");
+    plataforma = gtk_label_new("Elige una plataforma: ");
 
     /*Botones para elegir género*/
     radio11 = gtk_radio_button_new_with_label(NULL, "Acción");
@@ -27,12 +35,15 @@ activate (GtkApplication *app, gpointer user_data){
     GtkWidget *radios1[] = {radio11, radio21, radio31, radio41, radio51, radio61};
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio11), TRUE);
 
-    gtk_grid_attach(GTK_GRID(grid), radio11, 0,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio21, 2,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio31, 0,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio41, 2,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio51, 0,6,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio61, 2,6,2,2);
+    grid1 = gtk_grid_new ();
+    gtk_grid_set_row_spacing(GTK_GRID(grid1), 10);
+    gtk_grid_set_column_spacing(GTK_GRID(grid1), 10);
+    gtk_grid_attach(GTK_GRID(grid1), radio11, 0,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid1), radio21, 0,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid1), radio31, 3,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid1), radio41, 3,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid1), radio51, 6,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid1), radio61, 6,3,2,2);
 
     /*Botones para elegir años*/
     radio12 = gtk_radio_button_new_with_label(NULL, "1920-1939");
@@ -44,12 +55,15 @@ activate (GtkApplication *app, gpointer user_data){
     GtkWidget *radios2[] = {radio12, radio22, radio32, radio42, radio52, radio62};
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio12), TRUE);
 
-    gtk_grid_attach(GTK_GRID(grid), radio12, 5,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio22, 7,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio32, 5,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio42, 7,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio52, 5,6,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio62, 7,6,2,2);
+    grid2 = gtk_grid_new ();
+    gtk_grid_set_row_spacing(GTK_GRID(grid2), 10);
+    gtk_grid_set_column_spacing(GTK_GRID(grid2), 10);
+    gtk_grid_attach(GTK_GRID(grid2), radio12, 0,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid2), radio22, 0,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid2), radio32, 3,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid2), radio42, 3,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid2), radio52, 6,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid2), radio62, 6,3,2,2);
 
     /*Botones para elegir plataforma*/
     radio13 = gtk_radio_button_new_with_label(NULL, "Netflix");
@@ -61,15 +75,25 @@ activate (GtkApplication *app, gpointer user_data){
     GtkWidget *radios3[] = {radio13, radio23, radio33, radio43, radio53, radio63};
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio13), TRUE);
 
-    gtk_grid_attach(GTK_GRID(grid), radio13, 10,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio23, 12,0,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio33, 10,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio43, 12,3,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio53, 10,6,2,2);
-    gtk_grid_attach(GTK_GRID(grid), radio63, 12,6,2,2);
+    grid3 = gtk_grid_new ();
+    gtk_grid_set_row_spacing(GTK_GRID(grid3), 10);
+    gtk_grid_set_column_spacing(GTK_GRID(grid3), 10);
+    gtk_grid_attach(GTK_GRID(grid3), radio13, 0,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid3), radio23, 0,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid3), radio33, 3,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid3), radio43, 3,3,2,2);
+    gtk_grid_attach(GTK_GRID(grid3), radio53, 6,0,2,2);
+    gtk_grid_attach(GTK_GRID(grid3), radio63, 6,3,2,2);
 
-    /*definir lo que contiene los widgets como grid*/
-    gtk_container_add (GTK_CONTAINER (window), grid);
+    /*acomodar la box con cada widget*/
+    gtk_box_pack_start(GTK_BOX(box), titulo, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), genero, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), grid1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), años, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), grid2, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), plataforma, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), grid3, FALSE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(window), box);
 
     gtk_widget_show_all(window);
 }
