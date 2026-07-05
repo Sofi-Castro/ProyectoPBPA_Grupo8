@@ -92,30 +92,3 @@ int api_buscar_peliculas(const FiltrosBusqueda *filtros, RespuestaHTTP *respuest
     curl_global_cleanup();
     return 0;
 }
-
-int main(void)
-{
-    // Filtros de prueba: accion, 2010-2020, Netflix
-    FiltrosBusqueda filtros = {
-        .genero_id     = 28,
-        .anio_desde    = 2010,
-        .anio_hasta    = 2020,
-        .plataforma_id = 8
-    };
-
-    RespuestaHTTP respuesta;
-
-    printf("=== TEST api_buscar_peliculas ===\n\n");
-
-    if (api_buscar_peliculas(&filtros, &respuesta) != 0) {
-        fprintf(stderr, "fallo en la peticion\n");
-        return 1;
-    }
-
-    printf("=== JSON recibido (%zu bytes) ===\n\n", respuesta.longitud);
-    printf("%.2000s\n", respuesta.datos);
-    if (respuesta.longitud > 2000)
-        printf("\n... (truncado en pantalla)\n");
-
-    return 0;
-}
