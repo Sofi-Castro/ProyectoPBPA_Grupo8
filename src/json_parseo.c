@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <cjson/cJSON.h>
 #include <stdlib.h>
-
-
-struct pelicula {
-    char *titulo;
-    char *descripcion;
-    char *calificacion;
-    char *poster_path;
-};
+#include "json_parseo.h"
 
 int parsear_datos(char *string, struct pelicula *salida, int cantidad){
 
