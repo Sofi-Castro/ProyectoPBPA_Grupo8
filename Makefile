@@ -12,7 +12,7 @@ OBJS = main.o options.o api.o
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(GTK_LIBS) -lcurl
 
-main.o: src/main.c include/options.h
+main.o: main.c include/options.h
 	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c src/main.c -o main.o
 
 options.o: src/options.c include/options.h include/api.h
