@@ -3,10 +3,15 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-void option_genre(GtkButton *button, gpointer data, FiltrosBusqueda *filtros);
+typedef struct {
+    GtkWidget *radios[6];
+    FiltrosBusqueda *filtros;
+} Opcionradio;
 
-void option_year(GtkButton *button, gpointer data, FiltrosBusqueda *filtros);
+void option_genre(GtkButton *button, gpointer data);
 
-void option_platform(GtkButton *button, gpointer data, FiltrosBusqueda *filtros);
+void option_year(GtkButton *button, gpointer data);
+
+void option_platform(GtkButton *button, gpointer data);
 
 #endif
