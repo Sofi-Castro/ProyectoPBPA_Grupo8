@@ -13,7 +13,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(GTK_LIBS) -lcurl
 
 main.o: main.c include/options.h
-	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c src/main.c -o main.o
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c main.c -o main.o
 
 options.o: src/options.c include/options.h include/api.h
 	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c src/options.c -o options.o

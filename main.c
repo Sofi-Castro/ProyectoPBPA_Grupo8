@@ -10,11 +10,6 @@ void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
     GtkWidget *radio13, *radio23, *radio33, *radio43, *radio53, *radio63;
-    Opcionradio grupo1;
-    Opcionradio grupo2;
-    Opcionradio grupo3;
-
-    FiltrosBusqueda *filtro_final = malloc(sizeof(FiltrosBusqueda));
     
     /*Configuración principal de la interfaz*/
     window = gtk_application_window_new (app);
@@ -43,11 +38,6 @@ void activate (GtkApplication *app, gpointer user_data){
     radio41 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Thriller");
     radio51 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Terror");
     radio61 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Drama");
-    GtkWidget *radios1[] = {radio11, radio21, radio31, radio41, radio51, radio61};
-    for (int i = 0; i < 6; i++) {
-        grupo1.radios[i] = radios1[i];
-    }
-    grupo1->filtros = filtro_final;
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio11), TRUE);
 
     grid1 = gtk_grid_new ();
@@ -67,11 +57,6 @@ void activate (GtkApplication *app, gpointer user_data){
     radio42 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "1980-1999");
     radio52 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2000-2019");
     radio62 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2020-2026");
-    GtkWidget *radios2[] = {radio12, radio22, radio32, radio42, radio52, radio62};
-    for (int i = 0; i < 6; i++) {
-        grupo2.radios[i] = radios2[i];
-    }
-    grupo2.filtros = filtro_final;
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio12), TRUE);
 
     grid2 = gtk_grid_new ();
@@ -91,11 +76,6 @@ void activate (GtkApplication *app, gpointer user_data){
     radio43 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Youtube");
     radio53 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Prime Video");
     radio63 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Apple TV");
-    GtkWidget *radios3[] = {radio13, radio23, radio33, radio43, radio53, radio63};
-    for (int i = 0; i < 6; i++) {
-        grupo3.radios[i] = radios3[i];
-    }
-    grupo3->filtros = filtro_final;
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio13), TRUE);
 
     grid3 = gtk_grid_new ();
@@ -107,11 +87,6 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_grid_attach(GTK_GRID(grid3), radio43, 3,3,2,2);
     gtk_grid_attach(GTK_GRID(grid3), radio53, 6,0,2,2);
     gtk_grid_attach(GTK_GRID(grid3), radio63, 6,3,2,2);
-
-    /*Funcionalidad de los botones*/
-    g_signal_connect(boton, "clicked", G_CALLBACK(option_genre), grupo1);
-    g_signal_connect(boton, "clicked", G_CALLBACK(option_year), grupo2);
-    g_signal_connect(boton, "clicked", G_CALLBACK(option_platform), grupo3);
 
     /*Acomodar la box con cada widget*/
     gtk_box_pack_start(GTK_BOX(box), titulo, FALSE, FALSE, 0);
@@ -125,8 +100,6 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_container_add(GTK_CONTAINER(window), box);
 
     gtk_widget_show_all(window);
-
-    free(filtro_final);
 }
 
 int main(int argc, char **argv){
@@ -138,8 +111,6 @@ int main(int argc, char **argv){
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref (app);
-
-
 
     return status;
 }

@@ -4,7 +4,7 @@
 #define OPTIONS_H
 
 typedef struct {
-    GtkWidget *radios[6];
+    GtkWidget *radio[6];
     FiltrosBusqueda *filtros;
 } Opcionradio;
 
