@@ -78,7 +78,7 @@ I --> J([Fin])
 | `main.c` | Contiene la intregración de todo el proyecto. |
 | `src/` | Implementación de las funciones correspondientes a cada librería. |
 | `include/` | Header files con las declaraciones de funciones y estructuras. |
-| `Makefile` | Compilación del proyecyo. |
+| `Makefile` | Compilación del proyecto. |
 
 ## Dependencias
 
@@ -89,8 +89,14 @@ sudo apt update
 ```
 
 ### Gtk3
+```bash
+sudo apt install libgtk-3-dev
+```
 
 ### libcurl
+```bash
+sudo apt install libcurl4-openssl-dev
+```
 
 ### cJson
 ```bash
