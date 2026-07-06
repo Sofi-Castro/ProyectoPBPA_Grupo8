@@ -18,7 +18,10 @@ typedef struct {
 
 int api_buscar_peliculas(const FiltrosBusqueda *filtros, RespuestaHTTP *respuesta);
 
+<<<<<<< HEAD
 /* Descarga el poster de TMDB (poster_path) a ruta_destino. 0 = exito, !=0 = error. */
 int api_descargar_poster(const char *poster_path, const char *ruta_destino);
 
+=======
+>>>>>>> develop
 #endif
