@@ -11,10 +11,12 @@ typedef struct {
 
 typedef struct {
     FiltrosBusqueda *filtros;
-    pelicula *peliculas;
+    struct pelicula *peliculas;
     Opcionradio *radio1;
     Opcionradio *radio2;
     Opcionradio *radio3;
+    GtkWidget *caja;
+    GtkWidget *ventana;
 } punteros;
 
 void option_genre(GtkButton *button, gpointer data);
@@ -22,5 +24,7 @@ void option_genre(GtkButton *button, gpointer data);
 void option_year(GtkButton *button, gpointer data);
 
 void option_platform(GtkButton *button, gpointer data);
+
+void interfaz_resultado(GtkButton *button, gpointer data);
 
 #endif

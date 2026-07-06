@@ -7,26 +7,24 @@ void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *grid1, *grid2, *grid3;
     GtkWidget *titulo, *genero, *años, *plataforma;
-    GtkWidget *titulo1, *descripcion1, *calificacion1;
-    GtkWidget *titulo2, *descripcion2, *calificacion2;
-    GtkWidget *titulo3, *descripcion3, *calificacion3;
-    GtkWidget *boton;
+    GtkWidget *boton, *boton_mostrar;
     GtkWidget *box;
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
     GtkWidget *radio13, *radio23, *radio33, *radio43, *radio53, *radio63;
-    RespuestaHTTP respuesta;
 
     /*Nombrar como entrada el struct tipo punteros que recibe activate*/
     punteros *entrada = (punteros *)user_data;
     
     /*Configuración principal de la interfaz*/
     window = gtk_application_window_new (app);
+    entrada->ventana = window;
     gtk_window_set_title (GTK_WINDOW (window), "Recomendador de películas");
     gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
  
     /*Configuración de la caja donde van los elementos*/
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
+    entrada->caja = box;
 
     /*Mensajes*/
     titulo = gtk_label_new("¿Qué tipo de película quiere ver? Selccione una opción de cada una de las tres categorías:");
@@ -37,8 +35,11 @@ void activate (GtkApplication *app, gpointer user_data){
     plataforma = gtk_label_new("Seleccione una plataforma: ");
     gtk_label_set_xalign(GTK_LABEL(plataforma), 0.0);
 
-    /*Botón para buscar*/
-    boton = gtk_button_new_with_label("Buscar");
+    /*Botón para seleccionar los campos*/
+    boton = gtk_button_new_with_label("Seleccionar");
+
+    /*Botón para mostrar los resultados*/
+    boton_mostrar = gtk_button_new_with_label("Mostrar resultados");
 
     /*Botones para elegir género*/
     radio11 = gtk_radio_button_new_with_label(NULL, "Acción");
@@ -47,7 +48,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio41 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Thriller");
     radio51 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Terror");
     radio61 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Drama");
-    GtkWidget radios1[6] = [radio11, radio12, radio31, radio41, radio51, radio61];
+    GtkWidget *radios1[6] = {radio11, radio12, radio31, radio41, radio51, radio61};
     for (int i = 0; i < 6; i++){
         entrada->radio1->radio[i] = radios1[i];
     }
@@ -70,7 +71,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio42 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "1980-1999");
     radio52 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2000-2019");
     radio62 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2020-2026");
-    GtkWidget radios2[6] = [radio12, radio22, radio32, radio42, radio52, radio62];
+    GtkWidget *radios2[6] = {radio12, radio22, radio32, radio42, radio52, radio62};
     for (int i = 0; i < 6; i++){
         entrada->radio2->radio[i] = radios2[i];
     }
@@ -93,7 +94,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio43 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Youtube");
     radio53 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Prime Video");
     radio63 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Apple TV");
-    GtkWidget *radios3[6] = [radio13, radio23, radio33, radio43, radio53, radio63];
+    GtkWidget *radios3[6] = {radio13, radio23, radio33, radio43, radio53, radio63};
     for (int i = 0; i < 6; i++){
         entrada->radio3->radio[i] = radios3[i];
     }
@@ -118,31 +119,14 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_box_pack_start(GTK_BOX(box), plataforma, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), grid3, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(box), boton, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), boton_mostrar, FALSE, FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), box);
 
     /*Funcionalidad del boton con los radio buttons*/
     g_signal_connect(boton, "clicked", G_CALLBACK(option_genre), entrada->radio1);
     g_signal_connect(boton, "clicked", G_CALLBACK(option_year), entrada->radio2);
     g_signal_connect(boton, "clicked", G_CALLBACK(option_platform), entrada->radio3);
-
-    /*Después de elegir las opciones en la interfaz, hay que hacer la petición a la API y parsear la respuesta*/
-    api_buscar_peliculas(entrada->filtros, &respuesta);
-    parsear_datos(&respuesta, entrada->peliculas);
-
-    titulo1 = gtk_label_new(entrada->peliculas[0].titulo);
-    descripcion1 = gtk_label_new(entrada->peliculas[0].descripcion);
-    calificacion1 = gtk_label_new(entrada->peliculas[0].calificacion);
-
-    titulo2 = gtk_label_new(entrada->peliculas[1].titulo);
-    descripcion2 = gtk_label_new(entrada->peliculas[1].descripcion);
-    calificacion2 = gtk_label_new(entrada->peliculas[1].calificacion);
-
-    titulo3 = gtk_label_new(entrada->peliculas[2].titulo);
-    descripcion3 = gtk_label_new(entrada->peliculas[2].descripcion);
-    calificacion3 = gtk_label_new(entrada->peliculas[2].calificacion);
-
-    
-
+    g_signal_connect(boton_mostrar, "clicked", G_CALLBACK(interfaz_resultado), entrada);
 
     gtk_widget_show_all(window);
 }
@@ -154,7 +138,7 @@ int main(int argc, char **argv){
 
     FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
 
-    cantidad = 3; /*la cantidad de peliculas recomendadas*/
+    int cantidad = 3; /*la cantidad de peliculas recomendadas*/
 
     /*guardar espacio para las recomendaciones*/
     struct pelicula *recomendacion = malloc(cantidad * sizeof(struct pelicula));
