@@ -150,7 +150,7 @@ int main(int argc, char **argv){
     filtro->plataforma_id = 0;
 
     /*guardar espacio para las recomendaciones*/
-    struct pelicula *recomendacion = malloc(cantidad * sizeof(struct pelicula));
+    struct pelicula *recomendacion = calloc(cantidad, sizeof(struct pelicula)); /* calloc: zero-init para liberar sin peligro en la 1a busqueda */
     if (!recomendacion){
         fprintf(stderr, "fallo en la reserva de memoria\n");
         free(filtro);

@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include "interfaz.h"
 #include "api.h"
 #include "json_parseo.h"
@@ -7,7 +8,7 @@ void option_genre(GtkButton *button, gpointer data){
 
     punteros *radio1 = (punteros *)data;
 
-    int lista_id[6] = {28, 10749, 35, 53, 27, 18};
+    int lista_id[6] = {28, 10764, 35, 53, 27, 18};
 
     for (int i = 0; i < 6; i++) {
         if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio1[i]))) {
@@ -48,6 +49,17 @@ void option_platform(GtkButton *button, gpointer data){
 
 }
 
+/* Libera los strings de una busqueda anterior (sin liberar el arreglo)
+   para no fugar memoria al pulsar "Mostrar resultados" varias veces. */
+static void liberar_strings(struct pelicula *p, int n){
+    for (int i = 0; i < n; i++){
+        free(p[i].titulo);       p[i].titulo       = NULL;
+        free(p[i].descripcion);  p[i].descripcion  = NULL;
+        free(p[i].calificacion); p[i].calificacion = NULL;
+        free(p[i].poster_path);  p[i].poster_path  = NULL;
+    }
+}
+
 void interfaz_resultado(GtkButton *button, gpointer data){
 
     punteros *entrada = (punteros *)data;
@@ -55,6 +67,9 @@ void interfaz_resultado(GtkButton *button, gpointer data){
     RespuestaHTTP respuesta;
 
     int cantidad = 3;
+
+    /* Liberar resultados de una busqueda previa antes de sobrescribir. */
+    liberar_strings(entrada->peliculas, cantidad);
 
     int consulta = api_buscar_peliculas(entrada->filtros, &respuesta);
 
