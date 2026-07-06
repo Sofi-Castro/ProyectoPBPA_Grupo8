@@ -6,7 +6,7 @@ GTK_CFLAGS = $(shell pkg-config --cflags gtk+-3.0)
 GTK_LIBS = $(shell pkg-config --libs gtk+-3.0)
 LIBS = $(GTK_LIBS) -lcurl -lcjson
 
-TARGET = programa
+TARGET = recomendador_de_peliculas
 
 OBJS = main.o interfaz.o api.o json_parseo.o
 

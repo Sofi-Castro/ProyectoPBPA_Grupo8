@@ -38,7 +38,7 @@ void option_platform(GtkButton *button, gpointer data){
 
     punteros *radio1 = (punteros *)data;
 
-    int lista_id[6] = {8, 384, 337, 531, 119, 2};
+    int lista_id[6] = {8, 3, 337, 531, 119, 2};
 
     for (int i = 0; i < 6; i++) {
         if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio3[i]))) {

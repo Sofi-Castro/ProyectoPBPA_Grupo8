@@ -88,7 +88,7 @@ void activate (GtkApplication *app, gpointer user_data){
 
     /*Botones para elegir plataforma*/
     radio13 = gtk_radio_button_new_with_label(NULL, "Netflix");
-    radio23 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Max");
+    radio23 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Google Play Movies");
     radio33 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Disney+");
     radio43 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Paramount");
     radio53 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Prime Video");
