@@ -93,7 +93,6 @@ int api_buscar_peliculas(const FiltrosBusqueda *filtros, RespuestaHTTP *respuest
     return 0;
 }
 
-<<<<<<< HEAD
 // Descarga el poster entregado por la API (poster_path de TMDB) a un archivo local.
 // Escribe primero a un temporal .part y solo lo deja como definitivo si todo salio bien.
 int api_descargar_poster(const char *poster_path, const char *ruta_destino)
@@ -160,8 +159,6 @@ int api_descargar_poster(const char *poster_path, const char *ruta_destino)
     return 0;
 }
 
-=======
->>>>>>> develop
 int main(void)
 {
     // Filtros de prueba: accion, 2010-2020, Netflix
