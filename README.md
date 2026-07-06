@@ -57,14 +57,12 @@ I --> J([Fin])
 ├── include/
 │   ├── json_parseo.h
 │   ├── api.h
-│   ├── 
-│   └── 
+│   └── interfaz.h
 │
 ├── src/
 │   ├── json_parseo.c
 │   ├── api.c
-│   ├── 
-│   └── 
+│   └── interfaz.c
 │
 ├── main.c
 ├── Makefile
@@ -113,7 +111,13 @@ git clone https://github.com/Sofi-Castro/ProyectoPBPA_Grupo8
 cd ProyectoPBPA_Grupo8
 ```
 
-En donde clonó el repositorio, cree una carpeta llamada imagenes. Es importante que se llame así. 
+En donde clonó el repositorio, cree una carpeta llamada imagenes. Es importante que se llame así. Ejecute:
+
+
+```bash
+mkdir imagenes
+```
+
 
 ### API key
 
@@ -141,7 +145,7 @@ make
 Si la compilación es exitosa, se generará el ejecutable llamado:
 
 ```text
-programa
+recomendardor_de_peliculas
 ```
 
 ### Ejecución
@@ -149,6 +153,6 @@ programa
 Para ejecutar el programa:
 
 ```bash
-./programa
+./recomendardor_de_peliculas
 ```
 
