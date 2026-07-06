@@ -5,16 +5,11 @@
 #define INTERFAZ_H
 
 typedef struct {
-    GtkWidget *radio[6];
-    FiltrosBusqueda *filtros;
-} Opcionradio;
-
-typedef struct {
     FiltrosBusqueda *filtros;
     struct pelicula *peliculas;
-    Opcionradio *radio1;
-    Opcionradio *radio2;
-    Opcionradio *radio3;
+    GtkWidget *radio1[6];
+    GtkWidget *radio2[6];
+    GtkWidget *radio3[6];
     GtkWidget *caja;
     GtkWidget *ventana;
 } punteros;

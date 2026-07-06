@@ -5,12 +5,12 @@
 
 void option_genre(GtkButton *button, gpointer data){
 
-    Opcionradio *radio1 = (Opcionradio *)data;
+    punteros *radio1 = (punteros *)data;
 
     int lista_id[6] = {28, 10764, 35, 53, 27, 18};
 
     for (int i = 0; i < 6; i++) {
-        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio1[i]))) {
             radio1->filtros->genero_id = lista_id[i];
             break;
         }
@@ -19,13 +19,13 @@ void option_genre(GtkButton *button, gpointer data){
 
 void option_year(GtkButton *button, gpointer data){
 
-    Opcionradio *radio1 = (Opcionradio *)data;
+    punteros *radio1 = (punteros *)data;
 
     int lista_desde[6] = {1920,1940,1960,1980,2000,2020};
     int lista_hasta[6] = {1939, 1959, 1979, 1999, 2019, 2026};
 
     for (int i = 0; i < 6; i++) {
-        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio2[i]))) {
             radio1->filtros->anio_desde = lista_desde[i];
             radio1->filtros->anio_hasta = lista_hasta[i];
             break;
@@ -35,14 +35,12 @@ void option_year(GtkButton *button, gpointer data){
 
 void option_platform(GtkButton *button, gpointer data){
 
-    Opcionradio *radio1 = (Opcionradio *)data;
-
-    g_print("radio1 = %p\n", (void *)radio1);
+    punteros *radio1 = (punteros *)data;
 
     int lista_id[6] = {8, 384, 337, 192, 119, 2};
 
     for (int i = 0; i < 6; i++) {
-        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio3[i]))) {
             radio1->filtros->plataforma_id = lista_id[i];
             break;
         }
