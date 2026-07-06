@@ -12,6 +12,7 @@ void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
     GtkWidget *radio13, *radio23, *radio33, *radio43, *radio53, *radio63;
+    RespuestaHTTP respuesta;
 
     /*Nombrar como entrada el struct tipo punteros que recibe activate*/
     punteros *entrada = (punteros *)user_data;
@@ -122,8 +123,8 @@ void activate (GtkApplication *app, gpointer user_data){
     g_signal_connect(boton, "clicked", G_CALLBACK(option_platform), entrada->radio3);
 
     /*Después de elegir las opciones en la interfaz, hay que hacer la petición a la API y parsear la respuesta*/
-    
-
+    api_buscar_peliculas(entrada->filtros, &respuesta);
+    parsear_datos(&respuesta, entrada->peliculas);
 
     gtk_widget_show_all(window);
 }
@@ -135,25 +136,10 @@ int main(int argc, char **argv){
 
     FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
 
+    cantidad = 3; /*la cantidad de peliculas recomendadas*/
+
     /*guardar espacio para las recomendaciones*/
-    pelicula *recomendacion1 = malloc(sizeof(pelicula));
-    recomendacion1->titulo = malloc(100);
-    recomendacion1->descripcion = malloc(100);
-    recomendacion1->calificacion = malloc(100);
-    recomendacion1->poster_path = malloc(100);
-
-    pelicula *recomendacion2 = malloc(sizeof(pelicula));
-    recomendacion2->titulo = malloc(100);
-    recomendacion2->descripcion = malloc(100);
-    recomendacion2->calificacion = malloc(100);
-    recomendacion2->poster_path = malloc(100);
-
-    pelicula *recomendacion3 = malloc(sizeof(pelicula));
-    recomendacion3->titulo = malloc(100);
-    recomendacion3->descripcion = malloc(100);
-    recomendacion3->calificacion = malloc(100);
-    recomendacion3->poster_path = malloc(100);
-
+    struct pelicula *recomendacion = malloc(cantidad * sizeof(struct pelicula));
 
     /*guardar espacio para los structs de las opciones del botón*/
     Opcionradio *opcion1 = malloc(sizeof(Opcionradio));
@@ -167,12 +153,10 @@ int main(int argc, char **argv){
     punteros *entrada_programa = malloc(sizeof(punteros));
 
     entrada_programa->filtros = filtro;
-    entrada_programa->pelicula1 = recomendacion1;
-    entrada_programa->pelicula2 = recomendacion2;
-    entrada_programa->pelicula3 = recomendacion3;
+    entrada_programa->peliculas = recomendacion;
     entrada_programa->radio1 = opcion1;
     entrada_programa->radio2 = opcion2;
-    entrada_programa->radio3 = opcion3; 
+    entrada_programa->radio3 = opcion3;
 
     app = gtk_application_new ("com.proyecto", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect (app, "activate", G_CALLBACK (activate), entrada_programa);
@@ -181,21 +165,8 @@ int main(int argc, char **argv){
 
     /*Liberar los espacios de memoria reservados*/
     free(filtro);
-    free(recomendacion1->titulo);
-    free(recomendacion1->descripcion);
-    free(recomendacion1->calificacion);
-    free(recomendacion1->poster_path);
-    free(recomendacion1);
-    free(recomendacion2->titulo);
-    free(recomendacion2->descripcion);
-    free(recomendacion2->calificacion);
-    free(recomendacion2->poster_path);
-    free(recomendacion2);
-    free(recomendacion3->titulo);
-    free(recomendacion3->descripcion);
-    free(recomendacion3->calificacion);
-    free(recomendacion3->poster_path);
-    free(recomendacion3);
+    free_memory(recomendacion, cantidad);
+    free(recomendacion);
     free(opcion1);
     free(opcion2);
     free(opcion3);

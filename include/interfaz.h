@@ -11,9 +11,7 @@ typedef struct {
 
 typedef struct {
     FiltrosBusqueda *filtros;
-    pelicula *pelicula1;
-    pelicula *pelicula2;
-    pelicula *pelicula3;
+    pelicula *peliculas;
     Opcionradio *radio1;
     Opcionradio *radio2;
     Opcionradio *radio3;

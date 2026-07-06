@@ -5,7 +5,6 @@
 
 int parsear_datos(char *string, struct pelicula *salida, int cantidad){
 
-
     // parsea los datos
 
     cJSON *json = cJSON_Parse(string);
@@ -44,10 +43,7 @@ int parsear_datos(char *string, struct pelicula *salida, int cantidad){
         i++;
     }
 
-
-
     // limpiar
-
     cJSON_Delete(json);
     return 0;
 }
