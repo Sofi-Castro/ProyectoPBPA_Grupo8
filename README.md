@@ -113,6 +113,8 @@ git clone https://github.com/Sofi-Castro/ProyectoPBPA_Grupo8
 cd ProyectoPBPA_Grupo8
 ```
 
+En donde clonó el repositorio, cree una carpeta llamada imagenes. Es importante que se llame así. 
+
 ### API key
 
 Para el uso de la api se requiere el consumo de una api key, para definir:
