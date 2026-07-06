@@ -90,7 +90,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio13 = gtk_radio_button_new_with_label(NULL, "Netflix");
     radio23 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Max");
     radio33 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Disney+");
-    radio43 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Youtube");
+    radio43 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Paramount");
     radio53 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Prime Video");
     radio63 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Apple TV");
     GtkWidget *radios3[6] = {radio13, radio23, radio33, radio43, radio53, radio63};
