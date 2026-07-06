@@ -7,6 +7,9 @@ void activate (GtkApplication *app, gpointer user_data){
     GtkWidget *window;
     GtkWidget *grid1, *grid2, *grid3;
     GtkWidget *titulo, *genero, *años, *plataforma;
+    GtkWidget *titulo1, *descripcion1, *calificacion1;
+    GtkWidget *titulo2, *descripcion2, *calificacion2;
+    GtkWidget *titulo3, *descripcion3, *calificacion3;
     GtkWidget *boton;
     GtkWidget *box;
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
@@ -125,6 +128,21 @@ void activate (GtkApplication *app, gpointer user_data){
     /*Después de elegir las opciones en la interfaz, hay que hacer la petición a la API y parsear la respuesta*/
     api_buscar_peliculas(entrada->filtros, &respuesta);
     parsear_datos(&respuesta, entrada->peliculas);
+
+    titulo1 = gtk_label_new(entrada->peliculas[0].titulo);
+    descripcion1 = gtk_label_new(entrada->peliculas[0].descripcion);
+    calificacion1 = gtk_label_new(entrada->peliculas[0].calificacion);
+
+    titulo2 = gtk_label_new(entrada->peliculas[1].titulo);
+    descripcion2 = gtk_label_new(entrada->peliculas[1].descripcion);
+    calificacion2 = gtk_label_new(entrada->peliculas[1].calificacion);
+
+    titulo3 = gtk_label_new(entrada->peliculas[2].titulo);
+    descripcion3 = gtk_label_new(entrada->peliculas[2].descripcion);
+    calificacion3 = gtk_label_new(entrada->peliculas[2].calificacion);
+
+    
+
 
     gtk_widget_show_all(window);
 }
