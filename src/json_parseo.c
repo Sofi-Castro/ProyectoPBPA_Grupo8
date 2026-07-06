@@ -8,6 +8,12 @@ int parsear_datos(char *string, struct pelicula *salida, int cantidad)
 {
     /* Inicializar */
     for (int k = 0; k < cantidad; k++) {
+
+        free((salida + k)->titulo);
+        free((salida + k)->descripcion);
+        free((salida + k)->calificacion);
+        free((salida + k)->poster_path);
+        
         (salida + k)->titulo       = NULL;
         (salida + k)->descripcion  = NULL;
         (salida + k)->calificacion = NULL;
@@ -17,9 +23,10 @@ int parsear_datos(char *string, struct pelicula *salida, int cantidad)
     cJSON *json = cJSON_Parse(string);
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL)
+        if (error_ptr != NULL){
             printf("Error JSON: %s\n", error_ptr);
         return 1;
+        }
     }
 
     cJSON *results = cJSON_GetObjectItemCaseSensitive(json, "results");
