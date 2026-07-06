@@ -49,9 +49,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio51 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Terror");
     radio61 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Drama");
     GtkWidget *radios1[6] = {radio11, radio21, radio31, radio41, radio51, radio61};
-    for (int i = 0; i < 6; i++){
-        entrada->radio1->radio[i] = radios1[i];
-    }
+    memcpy(entrada->radio1->radio, radios1, sizeof(radios1));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio11), TRUE);
 
     grid1 = gtk_grid_new ();
@@ -72,9 +70,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio52 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2000-2019");
     radio62 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio12), "2020-2026");
     GtkWidget *radios2[6] = {radio12, radio22, radio32, radio42, radio52, radio62};
-    for (int i = 0; i < 6; i++){
-        entrada->radio2->radio[i] = radios2[i];
-    }
+    memcpy(entrada->radio2->radio, radios2, sizeof(radios2));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio12), TRUE);
 
     grid2 = gtk_grid_new ();
@@ -95,9 +91,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio53 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Prime Video");
     radio63 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio13), "Apple TV");
     GtkWidget *radios3[6] = {radio13, radio23, radio33, radio43, radio53, radio63};
-    for (int i = 0; i < 6; i++){
-        entrada->radio3->radio[i] = radios3[i];
-    }
+    memcpy(entrada->radio3->radio, radios3, sizeof(radios3));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio13), TRUE);
 
     grid3 = gtk_grid_new ();
@@ -139,20 +133,66 @@ int main(int argc, char **argv){
     int cantidad = 3; /*la cantidad de peliculas recomendadas*/
 
     FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
+    if (!filtro){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        return 1;
+    }
+
+    filtro->genero_id = 0;
+    filtro->anio_desde = 0;
+    filtro->anio_hasta = 0;
+    filtro->plataforma_id = 0;
 
     /*guardar espacio para las recomendaciones*/
     struct pelicula *recomendacion = malloc(cantidad * sizeof(struct pelicula));
+    if (!recomendacion){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        free(filtro);
+        return 1;
+    }
 
     /*guardar espacio para los structs de las opciones del botón*/
     Opcionradio *opcion1 = malloc(sizeof(Opcionradio));
+    if (!opcion1){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        free(filtro);
+        free(recomendacion);
+        return 1;
+    }
+
     Opcionradio *opcion2 = malloc(sizeof(Opcionradio));
+    if (!opcion2){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        free(filtro);
+        free(opcion1);
+        free(recomendacion);
+        return 1;
+    }
+
     Opcionradio *opcion3 = malloc(sizeof(Opcionradio));
+    if (!opcion3){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        free(filtro);
+        free(opcion1);
+        free(opcion2);
+        free(recomendacion);
+        return 1;
+    }
 
     opcion1->filtros = filtro;
     opcion2->filtros = filtro;
     opcion3->filtros = filtro;
 
     punteros *entrada_programa = malloc(sizeof(punteros));
+    if (!entrada_programa){
+        fprintf(stderr, "fallo en la reserva de memoria\n");
+        free(filtro);
+        free(opcion1);
+        free(opcion2);
+        free(opcion3);
+        free(recomendacion);
+        return 1;
+    }
 
     entrada_programa->filtros = filtro;
     entrada_programa->peliculas = recomendacion;

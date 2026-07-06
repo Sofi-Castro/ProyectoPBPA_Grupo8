@@ -7,24 +7,22 @@ void option_genre(GtkButton *button, gpointer data){
 
     Opcionradio *radio1 = (Opcionradio *)data;
 
-    /*Acción*/
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[0]))){
-        radio1->filtros->genero_id = 28; 
-    /*Romance*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[1]))){
-        radio1->filtros->genero_id = 10746;
-    /*Comedia*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[2]))){
-        radio1->filtros->genero_id = 35;
-    /*Thriller*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[3]))){
-        radio1->filtros->genero_id = 53;
-    /*Terror*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[4]))){
-        radio1->filtros->genero_id = 27;
-    /*Drama*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[5]))){
-        radio1->filtros->genero_id = 18;
+    g_print("radio1 = %p\n", (void *)radio1);
+
+    for (int i = 0; i < 6; i++) {
+        g_print("radio[%d] = %p  GTK=%d\n",
+                i,
+                (void *)radio1->radio[i],
+                GTK_IS_TOGGLE_BUTTON(radio1->radio[i]));
+    }
+
+    int lista_id[6] = {28, 10764, 35, 53, 27, 18};
+
+    for (int i = 0; i < 6; i++) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+            radio1->filtros->genero_id = lista_id[i];
+            break;
+        }
     }
 }
 
@@ -32,50 +30,47 @@ void option_year(GtkButton *button, gpointer data){
 
     Opcionradio *radio1 = (Opcionradio *)data;
 
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[0]))){
-        radio1->filtros->anio_desde = 1920;
-        radio1->filtros->anio_hasta = 1939;
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[1]))){
-        radio1->filtros->anio_desde = 1940;
-        radio1->filtros->anio_hasta = 1959;
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[2]))){
-        radio1->filtros->anio_desde = 1960;
-        radio1->filtros->anio_hasta = 1979;
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[3]))){
-        radio1->filtros->anio_desde = 1980;
-        radio1->filtros->anio_hasta = 1999;
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[4]))){
-        radio1->filtros->anio_desde = 2000;
-        radio1->filtros->anio_hasta = 2019;
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[5]))){
-        radio1->filtros->anio_desde = 2020;
-        radio1->filtros->anio_hasta = 2026;
+    g_print("radio1 = %p\n", (void *)radio1);
+
+    for (int i = 0; i < 6; i++) {
+        g_print("radio[%d] = %p  GTK=%d\n",
+                i,
+                (void *)radio1->radio[i],
+                GTK_IS_TOGGLE_BUTTON(radio1->radio[i]));
     }
 
+    int lista_desde[6] = {1920,1940,1960,1980,2000,2020};
+    int lista_hasta[6] = {1939, 1959, 1979, 1999, 2019, 2026};
+
+    for (int i = 0; i < 6; i++) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+            radio1->filtros->anio_desde = lista_desde[i];
+            radio1->filtros->anio_hasta = lista_hasta[i];
+            break;
+        }
+    }
 }
 
 void option_platform(GtkButton *button, gpointer data){
 
     Opcionradio *radio1 = (Opcionradio *)data;
 
-    /*Netflix*/
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[0]))){
-        radio1->filtros->plataforma_id = 8;
-    /*Max*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[1]))){
-        radio1->filtros->plataforma_id = 384;
-    /*Disney+*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[2]))){
-        radio1->filtros->plataforma_id = 337;
-    /*Youtube*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[3]))){
-        radio1->filtros->plataforma_id = 192;
-    /*Prime Video*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[4]))){
-        radio1->filtros->plataforma_id = 119;
-    /*Apple TV*/
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[5]))){
-        radio1->filtros->plataforma_id = 2;
+    g_print("radio1 = %p\n", (void *)radio1);
+
+    for (int i = 0; i < 6; i++) {
+        g_print("radio[%d] = %p  GTK=%d\n",
+                i,
+                (void *)radio1->radio[i],
+                GTK_IS_TOGGLE_BUTTON(radio1->radio[i]));
+    }
+
+    int lista_id[6] = {8, 384, 337, 192, 119, 2};
+
+    for (int i = 0; i < 6; i++) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio1->radio[i]))) {
+            radio1->filtros->plataforma_id = lista_id[i];
+            break;
+        }
     }
 
 }
@@ -86,9 +81,15 @@ void interfaz_resultado(GtkButton *button, gpointer data){
 
     RespuestaHTTP respuesta;
 
-    /*Después de elegir las opciones en la interfaz, hay que hacer la petición a la API y parsear la respuesta*/
-    int cantidad = 3; /*la cantidad de peliculas recomendadas*/
-    api_buscar_peliculas(entrada->filtros, &respuesta);
+    int cantidad = 3;
+
+    int consulta = api_buscar_peliculas(entrada->filtros, &respuesta);
+
+    if (consulta != 0){
+        fprintf(stderr, "fallo en la peticion\n");
+        return;    
+    }
+    
     parsear_datos(respuesta.datos, entrada->peliculas, cantidad);
 
     /*Crear cuadriculas para cada película*/
@@ -106,26 +107,23 @@ void interfaz_resultado(GtkButton *button, gpointer data){
 
     /*Descargar las imágenes*/
     int valor1 = api_descargar_poster(entrada->peliculas[0].poster_path, "imagenes/imagen1.jpg");
-    if (valor1 != 0){
-        fprintf(stderr, "No se pudo descargar la imagen.");
-    }
     int valor2 = api_descargar_poster(entrada->peliculas[1].poster_path, "imagenes/imagen2.jpg");
-    if (valor2 != 0){
-        fprintf(stderr, "No se pudo descargar la imagen.");
-    }
     int valor3 = api_descargar_poster(entrada->peliculas[2].poster_path, "imagenes/imagen3.jpg");
-    if (valor3 != 0){
-        fprintf(stderr, "No se pudo descargar la imagen.");
-    }
 
-    /*Etiquetas con los titulos, descripciones y calificaciones*/
+    /*Etiquetas con los titulos, descripciones y calificaciones e imagen*/
     titulo1 = gtk_label_new(entrada->peliculas[0].titulo);
     gtk_label_set_xalign(GTK_LABEL(titulo1), 0.5);
     descripcion1 = gtk_label_new(entrada->peliculas[0].descripcion);
     gtk_label_set_line_wrap(GTK_LABEL(descripcion1), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(descripcion1), 50);
     calificacion1 = gtk_label_new(entrada->peliculas[0].calificacion);
-    imagen1 = gtk_image_new_from_file("imagenes/imagen1.jpg");
+
+    if (valor1 == 0) {
+        imagen1 = gtk_image_new_from_file("imagenes/imagen1.jpg");
+    } else {
+        imagen1 = gtk_image_new_from_icon_name("image-missing", GTK_ICON_SIZE_DIALOG);
+        fprintf(stderr, "No se pudo descargar la imagen.");
+    }
 
     titulo2 = gtk_label_new(entrada->peliculas[1].titulo);
     gtk_label_set_xalign(GTK_LABEL(titulo2), 0.5);
@@ -133,7 +131,13 @@ void interfaz_resultado(GtkButton *button, gpointer data){
     gtk_label_set_line_wrap(GTK_LABEL(descripcion2), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(descripcion2), 50);
     calificacion2 = gtk_label_new(entrada->peliculas[1].calificacion);
-    imagen2 = gtk_image_new_from_file("imagenes/imagen2.jpg");
+    
+    if (valor2 == 0) {
+        imagen2 = gtk_image_new_from_file("imagenes/imagen2.jpg");
+    } else {
+        imagen2 = gtk_image_new_from_icon_name("image-missing", GTK_ICON_SIZE_DIALOG);
+        fprintf(stderr, "No se pudo descargar la imagen.");
+    }
 
     titulo3 = gtk_label_new(entrada->peliculas[2].titulo);
     gtk_label_set_xalign(GTK_LABEL(titulo3), 0.5);
@@ -141,7 +145,13 @@ void interfaz_resultado(GtkButton *button, gpointer data){
     gtk_label_set_line_wrap(GTK_LABEL(descripcion3), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(descripcion3), 50);
     calificacion3 = gtk_label_new(entrada->peliculas[2].calificacion);
-    imagen3 = gtk_image_new_from_file("imagenes/imagen3.jpg");
+
+    if (valor3 == 0) {
+        imagen3 = gtk_image_new_from_file("imagenes/imagen3.jpg");
+    } else {
+        imagen3 = gtk_image_new_from_icon_name("image-missing", GTK_ICON_SIZE_DIALOG);
+        fprintf(stderr, "No se pudo descargar la imagen.");
+    }
 
     /*Cuadrícula para la primera película*/
     gtk_grid_set_row_spacing(GTK_GRID(grid4), 10);
