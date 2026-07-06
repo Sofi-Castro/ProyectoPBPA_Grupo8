@@ -92,3 +92,96 @@ int api_buscar_peliculas(const FiltrosBusqueda *filtros, RespuestaHTTP *respuest
     curl_global_cleanup();
     return 0;
 }
+
+// Descarga el poster entregado por la API (poster_path de TMDB) a un archivo local.
+// Escribe primero a un temporal .part y solo lo deja como definitivo si todo salio bien.
+int api_descargar_poster(const char *poster_path, const char *ruta_destino)
+{
+    if (!poster_path || poster_path[0] == '\0' || !ruta_destino) {
+        fprintf(stderr, "[api] poster_path o ruta_destino invalidos\n");
+        return -1;
+    }
+
+    // TMDB entrega poster_path como "/abc.jpg"; toleramos con o sin '/' inicial.
+    const char *sep = (poster_path[0] == '/') ? "" : "/";
+    char url[512];
+    snprintf(url, sizeof(url), "https://image.tmdb.org/t/p/w500%s%s", sep, poster_path);
+
+    // Descargamos a un temporal para no dejar una imagen a medias.
+    char tmp_path[600];
+    snprintf(tmp_path, sizeof(tmp_path), "%s.part", ruta_destino);
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    CURL *curl = curl_easy_init();
+    if (!curl) {
+        fprintf(stderr, "[api] error: no se pudo inicializar libcurl\n");
+        curl_global_cleanup();
+        return -1;
+    }
+
+    FILE *fp = fopen(tmp_path, "wb");
+    if (!fp) {
+        fprintf(stderr, "[api] error: no se pudo crear %s\n", tmp_path);
+        curl_easy_cleanup(curl);
+        curl_global_cleanup();
+        return -1;
+    }
+
+    curl_easy_setopt(curl, CURLOPT_URL,            url);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,  NULL);   // fwrite por defecto -> FILE
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA,      fp);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT,        20L);
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(curl, CURLOPT_FAILONERROR,    1L);     // HTTP >= 400 -> error
+
+    CURLcode res = curl_easy_perform(curl);
+
+    long http_code = 0;
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+
+    fclose(fp);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    if (res != CURLE_OK) {
+        fprintf(stderr, "[api] error al descargar poster: %s [HTTP %ld]\n",
+                curl_easy_strerror(res), http_code);
+        remove(tmp_path);
+        return -1;
+    }
+
+    if (rename(tmp_path, ruta_destino) != 0) {
+        fprintf(stderr, "[api] error: no se pudo renombrar %s -> %s\n", tmp_path, ruta_destino);
+        remove(tmp_path);
+        return -1;
+    }
+
+    return 0;
+}
+
+int main(void)
+{
+    // Filtros de prueba: accion, 2010-2020, Netflix
+    FiltrosBusqueda filtros = {
+        .genero_id     = 28,
+        .anio_desde    = 2010,
+        .anio_hasta    = 2020,
+        .plataforma_id = 8
+    };
+
+    RespuestaHTTP respuesta;
+
+    printf("=== TEST api_buscar_peliculas ===\n\n");
+
+    if (api_buscar_peliculas(&filtros, &respuesta) != 0) {
+        fprintf(stderr, "fallo en la peticion\n");
+        return 1;
+    }
+
+    printf("=== JSON recibido (%zu bytes) ===\n\n", respuesta.longitud);
+    printf("%.2000s\n", respuesta.datos);
+    if (respuesta.longitud > 2000)
+        printf("\n... (truncado en pantalla)\n");
+
+    return 0;
+}
