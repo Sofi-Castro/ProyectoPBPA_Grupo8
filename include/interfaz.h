@@ -1,7 +1,8 @@
 #include <gtk/gtk.h>
-#include <api.h>
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#include "api.h"
+#include "json_parseo.h"
+#ifndef INTERFAZ_H
+#define INTERFAZ_H
 
 typedef struct {
     GtkWidget *radio[6];

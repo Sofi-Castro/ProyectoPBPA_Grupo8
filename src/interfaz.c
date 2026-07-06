@@ -1,5 +1,7 @@
 #include <gtk/gtk.h>
-#include "options.h"
+#include "interfaz.h"
+#include "api.h"
+#include "json_parseo.h"
 
 void option_genre(GtkButton *button, gpointer data){
 
