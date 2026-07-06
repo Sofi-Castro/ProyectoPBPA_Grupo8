@@ -8,6 +8,11 @@ int parsear_datos(char *string, struct pelicula *salida, int cantidad)
 {
     /* Inicializar */
     for (int k = 0; k < cantidad; k++) {
+
+        free((salida + k)->titulo);
+        free((salida + k)->descripcion);
+        free((salida + k)->calificacion);
+        free((salida + k)->poster_path);
         
         (salida + k)->titulo       = NULL;
         (salida + k)->descripcion  = NULL;

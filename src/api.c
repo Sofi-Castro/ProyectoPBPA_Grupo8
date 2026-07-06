@@ -53,7 +53,7 @@ int api_buscar_peliculas(const FiltrosBusqueda *filtros, RespuestaHTTP *respuest
     printf("[api] URL: %s\n\n", url);
 
     // Inicializar libcurl
-    curl_global_init(CURL_GLOBAL_DEFAULT);
+    
     CURL *curl = curl_easy_init();
     if (!curl) {
         fprintf(stderr, "[api] error: no se pudo inicializar libcurl\n");
@@ -141,7 +141,6 @@ int api_descargar_poster(const char *poster_path, const char *ruta_destino)
 
     fclose(fp);
     curl_easy_cleanup(curl);
-    curl_global_cleanup();
 
     if (res != CURLE_OK) {
         fprintf(stderr, "[api] error al descargar poster: %s [HTTP %ld]\n",

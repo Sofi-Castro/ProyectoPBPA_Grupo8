@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <curl/curl.h>
 #include "interfaz.h"
 #include "api.h"
 #include "json_parseo.h"
@@ -32,7 +33,6 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_label_set_xalign(GTK_LABEL(plataforma), 0.0);
 
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
-    gtk_container_add(GTK_CONTAINER(scroll), entrada->caja);
 
     /*Botón para seleccionar los campos*/
     boton = gtk_button_new_with_label("Seleccionar");
@@ -136,6 +136,8 @@ int main(int argc, char **argv){
     GtkApplication *app;
     int status;
 
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+
     int cantidad = 3; /*la cantidad de peliculas recomendadas*/
 
     FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
@@ -178,5 +180,7 @@ int main(int argc, char **argv){
     free(entrada_programa);
 
     g_object_unref (app);
+    curl_global_cleanup();
+
     return status;
 }
