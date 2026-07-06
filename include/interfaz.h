@@ -9,6 +9,16 @@ typedef struct {
     FiltrosBusqueda *filtros;
 } Opcionradio;
 
+typedef struct {
+    FiltrosBusqueda *filtros;
+    pelicula *pelicula1;
+    pelicula *pelicula2;
+    pelicula *pelicula3;
+    Opcionradio *radio1;
+    Opcionradio *radio2;
+    Opcionradio *radio3;
+} punteros;
+
 void option_genre(GtkButton *button, gpointer data);
 
 void option_year(GtkButton *button, gpointer data);
