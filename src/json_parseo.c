@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cjson/cJSON.h>
 #include <stdlib.h>
+#include <string.h>
 #include "json_parseo.h"
 
 int parsear_datos(char *string, struct pelicula *salida, int cantidad){
@@ -33,14 +34,47 @@ int parsear_datos(char *string, struct pelicula *salida, int cantidad){
     // recorre cada pelicula guerda datos en salida
     
     cJSON_ArrayForEach(dato, results){
-        if (i == cantidad) break;
+        if (i >= cantidad) break;
 
-        (salida+i)->titulo = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "title") );
-        (salida+i)->descripcion = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "overview") );
-        (salida+i)->calificacion = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "vote_average") );
-        (salida+i)->poster_path = cJSON_Print( cJSON_GetObjectItemCaseSensitive(dato, "poster_path") );
+        cJSON *title = cJSON_GetObjectItemCaseSensitive(dato, "title");
+        cJSON *overview = cJSON_GetObjectItemCaseSensitive(dato, "overview");
+        cJSON *vote = cJSON_GetObjectItemCaseSensitive(dato, "vote_average");
+        cJSON *poster = cJSON_GetObjectItemCaseSensitive(dato, "poster_path");
+
+        /* TITULO */
+        if (title && cJSON_IsString(title) && title->valuestring) {
+            salida[i].titulo = strdup(title->valuestring);
+        } else {
+            salida[i].titulo = strdup("");
+        }
+
+        /* DESCRIPCION */
+        if (overview && cJSON_IsString(overview) && overview->valuestring) {
+            salida[i].descripcion = strdup(overview->valuestring);
+        } else {
+            salida[i].descripcion = strdup("");
+        }
+
+        /* CALIFICACION (double → string) */
+        char buffer[32];
+
+        if (vote && cJSON_IsNumber(vote)) {
+            snprintf(buffer, sizeof(buffer), "%.1f", vote->valuedouble);
+        } else {
+            snprintf(buffer, sizeof(buffer), "0.0");
+        }
+
+        salida[i].calificacion = strdup(buffer);
+
+        /* POSTER */
+        if (poster && cJSON_IsString(poster) && poster->valuestring) {
+            salida[i].poster_path = strdup(poster->valuestring);
+        } else {
+            salida[i].poster_path = strdup("");
+        }
 
         i++;
+        
     }
 
     // limpiar

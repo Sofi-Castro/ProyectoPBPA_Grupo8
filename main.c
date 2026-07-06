@@ -4,11 +4,9 @@
 #include "json_parseo.h"
 
 void activate (GtkApplication *app, gpointer user_data){
-    GtkWidget *window;
     GtkWidget *grid1, *grid2, *grid3;
     GtkWidget *titulo, *genero, *años, *plataforma;
     GtkWidget *boton, *boton_mostrar;
-    GtkWidget *box;
     GtkWidget *radio11, *radio21, *radio31, *radio41, *radio51, *radio61;
     GtkWidget *radio12, *radio22, *radio32, *radio42, *radio52, *radio62;
     GtkWidget *radio13, *radio23, *radio33, *radio43, *radio53, *radio63;
@@ -17,14 +15,12 @@ void activate (GtkApplication *app, gpointer user_data){
     punteros *entrada = (punteros *)user_data;
     
     /*Configuración principal de la interfaz*/
-    window = gtk_application_window_new (app);
-    entrada->ventana = window;
-    gtk_window_set_title (GTK_WINDOW (window), "Recomendador de películas");
-    gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
+    entrada->ventana = gtk_application_window_new (app);
+    gtk_window_set_title (GTK_WINDOW (entrada->ventana), "Recomendador de películas");
+    gtk_window_set_default_size (GTK_WINDOW (entrada->ventana), 200, 200);
  
     /*Configuración de la caja donde van los elementos*/
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
-    entrada->caja = box;
+    entrada->caja = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
 
     /*Mensajes*/
     titulo = gtk_label_new("¿Qué tipo de película quiere ver? Selccione una opción de cada una de las tres categorías:");
@@ -34,6 +30,9 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_label_set_xalign(GTK_LABEL(años), 0.0);
     plataforma = gtk_label_new("Seleccione una plataforma: ");
     gtk_label_set_xalign(GTK_LABEL(plataforma), 0.0);
+
+    GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add(GTK_CONTAINER(scroll), entrada->caja);
 
     /*Botón para seleccionar los campos*/
     boton = gtk_button_new_with_label("Seleccionar");
@@ -105,16 +104,17 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_grid_attach(GTK_GRID(grid3), radio63, 6,3,2,2);
 
     /*Acomodar la box con cada widget*/
-    gtk_box_pack_start(GTK_BOX(box), titulo, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), genero, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), grid1, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), años, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), grid2, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), plataforma, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), grid3, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), boton, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), boton_mostrar, FALSE, FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(window), box);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), titulo, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), genero, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), grid1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), años, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), grid2, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), plataforma, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), grid3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), boton, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(entrada->caja), boton_mostrar, FALSE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(scroll), entrada->caja);
+    gtk_container_add(GTK_CONTAINER(entrada->ventana), scroll);
 
     /*Funcionalidad del boton con los radio buttons*/
     g_signal_connect(boton, "clicked", G_CALLBACK(option_genre), entrada->radio1);
@@ -122,7 +122,7 @@ void activate (GtkApplication *app, gpointer user_data){
     g_signal_connect(boton, "clicked", G_CALLBACK(option_platform), entrada->radio3);
     g_signal_connect(boton_mostrar, "clicked", G_CALLBACK(interfaz_resultado), entrada);
 
-    gtk_widget_show_all(window);
+    gtk_widget_show_all(entrada->ventana);
 }
 
 int main(int argc, char **argv){
@@ -203,7 +203,6 @@ int main(int argc, char **argv){
     app = gtk_application_new ("com.proyecto", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect (app, "activate", G_CALLBACK (activate), entrada_programa);
     status = g_application_run (G_APPLICATION (app), argc, argv);
-    g_object_unref (app);
 
     /*Liberar los espacios de memoria reservados*/
     free(filtro);
@@ -214,5 +213,6 @@ int main(int argc, char **argv){
     free(opcion3);
     free(entrada_programa);
 
+    g_object_unref (app);
     return status;
 }
