@@ -3,7 +3,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 
 GTK_CFLAGS = $(shell pkg-config --cflags gtk+-3.0)
-LIBS = $(shell pkg-config --libs gtk+-3.0 -lcurl -lcjson)
+GTK_LIBS = $(shell pkg-config --libs gtk+-3.0)
+LIBS = $(GTK_LIBS) -lcurl -lcjson
 
 TARGET = programa
 

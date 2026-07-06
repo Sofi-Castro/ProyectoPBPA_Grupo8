@@ -87,8 +87,9 @@ void interfaz_resultado(GtkButton *button, gpointer data){
     RespuestaHTTP respuesta;
 
     /*Después de elegir las opciones en la interfaz, hay que hacer la petición a la API y parsear la respuesta*/
+    int cantidad = 3; /*la cantidad de peliculas recomendadas*/
     api_buscar_peliculas(entrada->filtros, &respuesta);
-    parsear_datos(&respuesta, entrada->peliculas);
+    parsear_datos(respuesta.datos, entrada->peliculas, cantidad);
 
     /*Crear cuadriculas para cada película*/
     GtkWidget *grid4 = gtk_grid_new();

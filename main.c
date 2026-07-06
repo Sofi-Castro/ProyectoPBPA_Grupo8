@@ -48,7 +48,7 @@ void activate (GtkApplication *app, gpointer user_data){
     radio41 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Thriller");
     radio51 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Terror");
     radio61 = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radio11), "Drama");
-    GtkWidget *radios1[6] = {radio11, radio12, radio31, radio41, radio51, radio61};
+    GtkWidget *radios1[6] = {radio11, radio21, radio31, radio41, radio51, radio61};
     for (int i = 0; i < 6; i++){
         entrada->radio1->radio[i] = radios1[i];
     }
@@ -136,9 +136,9 @@ int main(int argc, char **argv){
     GtkApplication *app;
     int status;
 
-    FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
-
     int cantidad = 3; /*la cantidad de peliculas recomendadas*/
+
+    FiltrosBusqueda *filtro = malloc(sizeof(FiltrosBusqueda));
 
     /*guardar espacio para las recomendaciones*/
     struct pelicula *recomendacion = malloc(cantidad * sizeof(struct pelicula));
