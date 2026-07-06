@@ -112,6 +112,22 @@ sudo apt install libcjson-dev
 git clone https://github.com/Sofi-Castro/ProyectoPBPA_Grupo8
 cd ProyectoPBPA_Grupo8
 ```
+
+### API key
+
+Para el uso de la api se requiere el consumo de una api key, para definir:
+
+
+```bash
+export TMDB_API_KEY="tu_api_key_aqui"
+```
+
+Si no tienes una, usa:
+
+```bash
+078c68fc57745dc1d802d151a59a9cc1
+```
+
 ### Compilación
 
 A continuación ejecute: 
