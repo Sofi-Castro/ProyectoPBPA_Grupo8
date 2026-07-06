@@ -32,7 +32,6 @@ void activate (GtkApplication *app, gpointer user_data){
     gtk_label_set_xalign(GTK_LABEL(plataforma), 0.0);
 
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
-    gtk_container_add(GTK_CONTAINER(scroll), entrada->caja);
 
     /*Botón para seleccionar los campos*/
     boton = gtk_button_new_with_label("Seleccionar");
