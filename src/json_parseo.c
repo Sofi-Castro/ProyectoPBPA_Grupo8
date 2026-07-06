@@ -13,6 +13,15 @@ static char *dup_texto(const cJSON *item) {
 
 int parsear_datos(char *string, struct pelicula *salida, int cantidad){
 
+    /* Inicializar a NULL: si TMDB devuelve menos peliculas que 'cantidad',
+       las entradas no llenadas quedan en NULL y free_memory() no revienta. */
+    for (int k = 0; k < cantidad; k++) {
+        (salida+k)->titulo       = NULL;
+        (salida+k)->descripcion  = NULL;
+        (salida+k)->calificacion = NULL;
+        (salida+k)->poster_path  = NULL;
+    }
+
     cJSON *json = cJSON_Parse(string);
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();

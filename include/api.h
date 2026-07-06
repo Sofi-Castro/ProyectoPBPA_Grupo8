@@ -1,6 +1,8 @@
 #ifndef API_H
 #define API_H
 
+#include <stddef.h>   /* size_t */
+
 #define API_BUFFER_MAX 65536
 #define API_MAX_RESULTADOS 3
 
