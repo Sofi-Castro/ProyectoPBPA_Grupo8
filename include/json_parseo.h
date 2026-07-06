@@ -8,7 +8,7 @@ struct pelicula {
     char *poster_path;
 };
 
-int parsear_datos(char *string, struct pelicula *salida);
+int parsear_datos(char *string, struct pelicula *salida, int cantidad);
 
 void free_memory(struct pelicula *salida, int cantidad);
 
